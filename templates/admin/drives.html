@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}Manage Drives{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <h2><i class="bi bi-briefcase"></i> Placement Drives</h2>
+    <p class="subtitle">Approve or reject placement drives posted by companies</p>
+</div>
+
+<div class="table-wrapper">
+    <table class="portal-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Company</th>
+                <th>Job Title</th>
+                <th>Deadline</th>
+                <th>Min CGPA</th>
+                <th>Departments</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for drive in drives %}
+            <tr>
+                <td class="td-id" data-label="ID">#{{ drive.id }}</td>
+                <td class="td-bold" data-label="Company">{{ drive.company.company_name }}</td>
+                <td data-label="Job Title">{{ drive.job_title }}</td>
+                <td class="td-small" data-label="Deadline">
+                    {% if drive.deadline %}{{ drive.deadline.strftime("%d %b %Y") }}{% else %}—{% endif %}
+                </td>
+                <td data-label="Min CGPA">{{ drive.min_cgpa or '—' }}</td>
+                <td class="td-small" data-label="Departments">{{ drive.allowed_departments or 'All' }}</td>
+                <td data-label="Status">
+                    <span class="status-pill
+                        {% if drive.status == 'Approved' %}badge-approved
+                        {% elif drive.status == 'Rejected' %}badge-rejected
+                        {% elif drive.status == 'Closed' %}badge-closed
+                        {% else %}badge-pending{% endif %}">
+                        {{ drive.status }}
+                    </span>
+                </td>
+                <td data-label="Actions">
+                    <div class="action-group">
+                        {% if drive.status == 'Pending' %}
+                            <a href="{{ url_for('admin.approve_drive', drive_id=drive.id) }}"
+                               class="btn-outline-teal btn-sm">
+                                <i class="bi bi-check-lg"></i> Approve
+                            </a>
+                            <a href="{{ url_for('admin.reject_drive', drive_id=drive.id) }}"
+                               class="btn-warning-soft btn-sm">
+                                <i class="bi bi-x-lg"></i> Reject
+                            </a>
+                        {% endif %}
+                        <a href="{{ url_for('admin.delete_drive', drive_id=drive.id) }}"
+                           class="btn-danger-soft btn-sm"
+                           onclick="return confirm('Delete this drive?')">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="8">
+                    <div class="empty-state">
+                        <i class="bi bi-briefcase-fill"></i>
+                        <p>No placement drives found.</p>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% block title %}Applicants — {{ drive.job_title }}{% endblock %}
+
+{% block content %}
+
+<div class="page-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+    <div>
+        <h2><i class="bi bi-people"></i> {{ drive.job_title }}</h2>
+        <p class="subtitle">{{ applications | length }} applicant{{ 's' if applications | length != 1 }}</p>
+    </div>
+    <a href="{{ url_for('company.company_dashboard') }}" class="btn-outline-teal">
+        <i class="bi bi-arrow-left"></i> Back to Dashboard
+    </a>
+</div>
+
+{% if applications %}
+<div class="table-wrapper">
+    <table class="portal-table">
+        <thead>
+            <tr>
+                <th>Photo</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Dept</th>
+                <th>CGPA</th>
+                <th>Applied On</th>
+                <th>Resume</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for app in applications %}
+            <tr>
+                <td data-label="Photo">
+                    {% if app.student.photo %}
+                        <img src="{{ url_for('static', filename='uploads/photos/' + app.student.photo) }}"
+                             width="38" height="38" class="profile-photo" alt="photo">
+                    {% else %}
+                        <div class="avatar-placeholder">
+                            <i class="bi bi-person"></i>
+                        </div>
+                    {% endif %}
+                </td>
+                <td class="td-bold" data-label="Name">{{ app.student.name }}</td>
+                <td class="td-small" data-label="Email">{{ app.student.email }}</td>
+                <td data-label="Dept">{{ app.student.department or '—' }}</td>
+                <td data-label="CGPA">{{ app.student.cgpa or '—' }}</td>
+                <td class="td-muted" data-label="Applied On">
+                    {{ app.application_date.strftime("%d %b %Y") }}
+                </td>
+                <td data-label="Resume">
+                    {% if app.student.resume %}
+                        <a href="{{ url_for('static', filename='uploads/resumes/' + app.student.resume) }}"
+                           target="_blank" class="btn-outline-teal btn-sm">
+                            <i class="bi bi-file-earmark-pdf"></i> View
+                        </a>
+                    {% else %}
+                        <span class="td-muted">None</span>
+                    {% endif %}
+                </td>
+                <td data-label="Status">
+                    <span class="status-pill
+                        {% if app.status == 'Applied' %}badge-applied
+                        {% elif app.status == 'Shortlisted' %}badge-shortlisted
+                        {% elif app.status == 'Selected' %}badge-selected
+                        {% elif app.status == 'Rejected' %}badge-rejected
+                        {% else %}badge-pending{% endif %}">
+                        {{ app.status }}
+                    </span>
+                </td>
+                <td data-label="Actions">
+                    <div class="action-group">
+                        {% if app.status != 'Shortlisted' %}
+                        <a href="{{ url_for('company.update_application_status', app_id=app.id, new_status='Shortlisted') }}"
+                           class="btn-warning-soft btn-sm">
+                            <i class="bi bi-bookmark"></i> Shortlist
+                        </a>
+                        {% endif %}
+                        {% if app.status != 'Selected' %}
+                        <a href="{{ url_for('company.update_application_status', app_id=app.id, new_status='Selected') }}"
+                           class="btn-outline-teal btn-sm">
+                            <i class="bi bi-check-circle"></i> Select
+                        </a>
+                        {% endif %}
+                        {% if app.status != 'Rejected' %}
+                        <a href="{{ url_for('company.update_application_status', app_id=app.id, new_status='Rejected') }}"
+                           class="btn-danger-soft btn-sm">
+                            <i class="bi bi-x-circle"></i> Reject
+                        </a>
+                        {% endif %}
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="portal-card text-center py-5">
+    <div class="empty-state">
+        <i class="bi bi-inbox"></i>
+        <p>No applications received yet for this drive.</p>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

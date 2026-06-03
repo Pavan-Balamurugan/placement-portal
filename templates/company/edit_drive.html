@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% block title %}Edit Drive — {{ drive.job_title }}{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <h2><i class="bi bi-pencil-square"></i> Edit Placement Drive</h2>
+    <p class="subtitle">Update the details for {{ drive.job_title }}</p>
+</div>
+
+<div class="form-card-wide">
+
+    {% if error %}
+    <div class="alert alert-danger">
+        <i class="bi bi-exclamation-circle"></i> {{ error }}
+    </div>
+    {% endif %}
+
+    <form method="POST">
+
+        <!-- Job Details -->
+        <p class="section-label">Job Details</p>
+
+        <div class="form-group">
+            <label class="form-label">Job Title <span class="required-star">*</span></label>
+            <input type="text" name="job_title" class="form-control"
+                   value="{{ drive.job_title }}" required>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Job Description <span class="required-star">*</span></label>
+            <textarea name="description" class="form-control" rows="4" required>{{ drive.description }}</textarea>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label">Required Skills</label>
+                <input type="text" name="required_skills" class="form-control"
+                       value="{{ drive.required_skills or '' }}"
+                       placeholder="e.g. Python, SQL, Flask">
+                <p class="form-text">Separate skills with commas</p>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Experience Required</label>
+                <input type="text" name="experience" class="form-control"
+                       value="{{ drive.experience or '' }}"
+                       placeholder="e.g. Fresher, 0-1 years">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label">Salary / CTC Range</label>
+                <input type="text" name="salary_range" class="form-control"
+                       value="{{ drive.salary_range or '' }}"
+                       placeholder="e.g. 4-6 LPA">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Application Deadline <span class="required-star">*</span></label>
+                <input type="date" name="deadline" class="form-control"
+                       value="{{ drive.deadline.strftime('%Y-%m-%d') if drive.deadline else '' }}" required>
+            </div>
+        </div>
+
+        <!-- Eligibility Criteria -->
+        <p class="section-label mt-3">Eligibility Criteria</p>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label">Minimum CGPA (0–10)</label>
+                <input type="number" step="0.01" min="0" max="10"
+                       name="min_cgpa" class="form-control"
+                       value="{{ drive.min_cgpa or 0 }}">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Max Backlogs Allowed</label>
+                <input type="number" min="0" name="max_backlogs"
+                       class="form-control" value="{{ drive.max_backlogs or 0 }}">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label">Min 10th Percentage</label>
+                <input type="number" step="0.01" min="0" max="100"
+                       name="min_tenth" class="form-control"
+                       value="{{ drive.min_tenth or 0 }}">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Min 12th Percentage</label>
+                <input type="number" step="0.01" min="0" max="100"
+                       name="min_twelfth" class="form-control"
+                       value="{{ drive.min_twelfth or 0 }}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Require No Arrear History</label>
+            <select name="require_no_arrears" class="form-select">
+                <option value="No" {% if drive.require_no_arrears != 'Yes' %}selected{% endif %}>No</option>
+                <option value="Yes" {% if drive.require_no_arrears == 'Yes' %}selected{% endif %}>Yes</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">
+                Allowed Departments <span class="required-star">*</span>
+                <small class="form-text">(select at least one)</small>
+            </label>
+            <div class="d-flex flex-wrap gap-2 mt-2">
+                {% set current_depts = (drive.allowed_departments or '').split(',') %}
+                {% for dept in ["All", "CSE", "IT", "CSBS", "DS", "ECE", "EEE", "Civil", "Mech"] %}
+                <div class="dept-checkbox">
+                    <input type="checkbox" name="allowed_departments"
+                           value="{{ dept }}" id="dept_{{ dept }}"
+                           {% if dept in current_depts %}checked{% endif %}>
+                    <label for="dept_{{ dept }}">{{ dept }}</label>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-teal px-5 py-2">
+                <i class="bi bi-save"></i> Save Changes
+            </button>
+            <a href="{{ url_for('company.company_dashboard') }}" class="btn-outline-teal px-4 py-2">
+                Cancel
+            </a>
+        </div>
+
+    </form>
+</div>
+
+{% endblock %}

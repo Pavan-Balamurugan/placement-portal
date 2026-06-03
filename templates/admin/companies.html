@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block title %}Manage Companies{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <h2><i class="bi bi-building"></i> Manage Companies</h2>
+    <p class="subtitle">Approve, reject, or manage registered companies</p>
+</div>
+
+<!-- Search -->
+<form method="GET" class="mb-4">
+    <div class="d-flex gap-2" style="max-width:420px;">
+        <input type="text" name="search" class="form-control"
+               placeholder="Search by company name..." value="{{ search }}">
+        <button type="submit" class="btn-teal px-4">
+            <i class="bi bi-search"></i>
+        </button>
+        {% if search %}
+            <a href="{{ url_for('admin.view_companies') }}" class="btn-outline-teal px-3">Clear</a>
+        {% endif %}
+    </div>
+</form>
+
+<div class="table-wrapper">
+    <table class="portal-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Company Name</th>
+                <th>Email</th>
+                <th>HR Contact</th>
+                <th>Approval</th>
+                <th>Active</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for company in companies %}
+            <tr>
+                <td class="td-id" data-label="ID">#{{ company.id }}</td>
+                <td class="td-bold" data-label="Name">{{ company.company_name }}</td>
+                <td data-label="Email">{{ company.email }}</td>
+                <td data-label="HR Contact">{{ company.hr_contact or '—' }}</td>
+                <td data-label="Approval">
+                    <span class="status-pill
+                        {% if company.approval_status == 'Approved' %}badge-approved
+                        {% elif company.approval_status == 'Rejected' %}badge-rejected
+                        {% else %}badge-pending{% endif %}">
+                        {{ company.approval_status }}
+                    </span>
+                </td>
+                <td data-label="Active">
+                    {% if company.is_active %}
+                        <span class="status-pill badge-active">Active</span>
+                    {% else %}
+                        <span class="status-pill badge-blacklisted">Blacklisted</span>
+                    {% endif %}
+                </td>
+                <td data-label="Actions">
+                    <div class="action-group">
+                        {% if company.approval_status != 'Approved' %}
+                            <a href="{{ url_for('admin.approve_company', company_id=company.id) }}"
+                               class="btn-outline-teal btn-sm">
+                                <i class="bi bi-check-lg"></i> Approve
+                            </a>
+                        {% endif %}
+                        {% if company.approval_status != 'Rejected' %}
+                            <a href="{{ url_for('admin.reject_company', company_id=company.id) }}"
+                               class="btn-warning-soft btn-sm">
+                                <i class="bi bi-x-lg"></i> Reject
+                            </a>
+                        {% endif %}
+                        <a href="{{ url_for('admin.blacklist_company', company_id=company.id) }}"
+                           class="btn-warning-soft btn-sm">
+                            <i class="bi bi-slash-circle"></i>
+                            {{ 'Unblock' if not company.is_active else 'Blacklist' }}
+                        </a>
+                        <a href="{{ url_for('admin.delete_company', company_id=company.id) }}"
+                           class="btn-danger-soft btn-sm"
+                           onclick="return confirm('Delete {{ company.company_name }}? This cannot be undone.')">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="7">
+                    <div class="empty-state">
+                        <i class="bi bi-building-slash"></i>
+                        <p>No companies found{% if search %} for "{{ search }}"{% endif %}.</p>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

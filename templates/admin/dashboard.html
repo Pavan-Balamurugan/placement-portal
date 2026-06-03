@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <h2><i class="bi bi-speedometer2"></i> Admin Dashboard</h2>
+    <p class="subtitle">Overview of the placement portal activity</p>
+</div>
+
+<!-- Stats -->
+<div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+        <div class="stat-card">
+            <i class="bi bi-building stat-icon"></i>
+            <span class="stat-number">{{ total_companies }}</span>
+            <span class="stat-label">Companies</span>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="stat-card">
+            <i class="bi bi-people stat-icon"></i>
+            <span class="stat-number">{{ total_students }}</span>
+            <span class="stat-label">Students</span>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="stat-card">
+            <i class="bi bi-briefcase stat-icon"></i>
+            <span class="stat-number">{{ total_drives }}</span>
+            <span class="stat-label">Placement Drives</span>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="stat-card">
+            <i class="bi bi-file-earmark-text stat-icon"></i>
+            <span class="stat-number">{{ total_applications }}</span>
+            <span class="stat-label">Applications</span>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<p class="section-label">Quick Actions</p>
+<div class="row g-3">
+    <div class="col-md-3 col-6">
+        <a href="{{ url_for('admin.view_companies') }}" class="action-card">
+            <i class="bi bi-building action-icon"></i>
+            <p class="action-title">Manage Companies</p>
+            <p class="action-sub">Approve, reject, blacklist</p>
+        </a>
+    </div>
+    <div class="col-md-3 col-6">
+        <a href="{{ url_for('admin.view_students') }}" class="action-card">
+            <i class="bi bi-people action-icon"></i>
+            <p class="action-title">Manage Students</p>
+            <p class="action-sub">View, search, blacklist</p>
+        </a>
+    </div>
+    <div class="col-md-3 col-6">
+        <a href="{{ url_for('admin.view_drives') }}" class="action-card">
+            <i class="bi bi-briefcase action-icon"></i>
+            <p class="action-title">Placement Drives</p>
+            <p class="action-sub">Approve or reject drives</p>
+        </a>
+    </div>
+    <div class="col-md-3 col-6">
+        <a href="{{ url_for('admin.view_applications') }}" class="action-card">
+            <i class="bi bi-file-earmark-text action-icon"></i>
+            <p class="action-title">All Applications</p>
+            <p class="action-sub">Full application history</p>
+        </a>
+    </div>
+</div>
+
+{% endblock %}

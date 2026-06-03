@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% block title %}Student Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="page-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+    <div>
+        <h2><i class="bi bi-speedometer2"></i> Dashboard</h2>
+        <p class="subtitle">Welcome back, {{ current_user.name }} — browse open placement drives</p>
+    </div>
+    {% if not current_user.profile_completed %}
+    <a href="{{ url_for('student.profile') }}" class="btn-warning-soft">
+        <i class="bi bi-exclamation-triangle"></i> Complete Your Profile
+    </a>
+    {% endif %}
+</div>
+
+{% if not current_user.profile_completed %}
+<div class="alert alert-warning">
+    <i class="bi bi-person-exclamation"></i>
+    Your profile is incomplete.
+    <a href="{{ url_for('student.profile') }}">Complete it now</a> to apply for drives.
+</div>
+{% endif %}
+
+<!-- Search -->
+<form method="GET" class="mb-4">
+    <div class="d-flex gap-2" style="max-width:460px;">
+        <input type="text" name="search" class="form-control"
+               placeholder="Search by company or job title..." value="{{ search or '' }}">
+        <button type="submit" class="btn-teal px-4">
+            <i class="bi bi-search"></i>
+        </button>
+        {% if search %}
+            <a href="{{ url_for('student.student_dashboard') }}" class="btn-outline-teal px-3">Clear</a>
+        {% endif %}
+    </div>
+</form>
+
+<!-- Available Drives -->
+<p class="section-label">Available Drives</p>
+
+{% if drives %}
+<div class="row g-3">
+    {% for drive in drives %}
+    <div class="col-md-6 col-lg-4">
+        <div class="drive-card">
+
+            <p class="company-tag">
+                <i class="bi bi-building"></i> {{ drive.company.company_name }}
+            </p>
+
+            <h5>{{ drive.job_title }}</h5>
+
+            <p class="drive-desc">
+                {{ drive.description[:100] if drive.description else '' }}
+                {% if drive.description and drive.description|length > 100 %}...{% endif %}
+            </p>
+
+            <!-- Tags row -->
+            <div class="drive-meta">
+                {% if drive.salary_range %}
+                <span class="drive-meta-tag">
+                    <i class="bi bi-cash"></i> {{ drive.salary_range }}
+                </span>
+                {% endif %}
+                {% if drive.experience %}
+                <span class="drive-meta-tag">
+                    <i class="bi bi-briefcase"></i> {{ drive.experience }}
+                </span>
+                {% endif %}
+                <span class="drive-meta-tag">
+                    <i class="bi bi-mortarboard"></i> CGPA ≥ {{ drive.min_cgpa or 0 }}
+                </span>
+                <span class="drive-meta-tag">
+                    <i class="bi bi-calendar"></i>
+                    {% if drive.deadline %}{{ drive.deadline.strftime("%d %b %Y") }}{% else %}No deadline{% endif %}
+                </span>
+            </div>
+
+            <!-- Skills -->
+            {% if drive.required_skills %}
+            <div class="drive-meta mb-2">
+                {% for skill in drive.required_skills.split(',') %}
+                    <span class="drive-meta-tag">{{ skill.strip() }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Apply / Status -->
+            <div class="mt-auto">
+                {% if drive.id in application_map %}
+                    {% set status = application_map[drive.id] %}
+                    <span class="status-pill w-100 d-block text-center
+                        {% if status == 'Applied' %}badge-applied
+                        {% elif status == 'Shortlisted' %}badge-shortlisted
+                        {% elif status == 'Selected' %}badge-selected
+                        {% elif status == 'Rejected' %}badge-rejected
+                        {% endif %}">
+                        {% if status == 'Applied' %}<i class="bi bi-send-check"></i> Applied
+                        {% elif status == 'Shortlisted' %}<i class="bi bi-bookmark-star"></i> Shortlisted
+                        {% elif status == 'Selected' %}<i class="bi bi-trophy"></i> Selected!
+                        {% elif status == 'Rejected' %}<i class="bi bi-x-circle"></i> Rejected
+                        {% endif %}
+                    </span>
+                {% else %}
+                    {% if not current_user.profile_completed %}
+                        <button class="btn-outline-teal w-100" disabled>
+                            Complete Profile to Apply
+                        </button>
+                    {% else %}
+                        <a href="{{ url_for('student.apply_drive', drive_id=drive.id) }}"
+                           class="btn-teal w-100 text-center d-block">
+                            <i class="bi bi-send"></i> Apply Now
+                        </a>
+                    {% endif %}
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="portal-card text-center py-5">
+    <div class="empty-state">
+        <i class="bi bi-briefcase"></i>
+        <p>
+            {% if search %}No drives found for "{{ search }}".
+            {% else %}No approved placement drives available right now.{% endif %}
+        </p>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

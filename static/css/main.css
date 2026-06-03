@@ -1,0 +1,901 @@
+/* =============================================
+   TCE Placement Portal — Main Stylesheet
+   ============================================= */
+
+/* ── Google Fonts ── */
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
+
+/* ── CSS Variables ── */
+:root {
+    --navy:       #0a1628;
+    --navy-mid:   #112240;
+    --navy-light: #1d3461;
+    --teal:       #00c9a7;
+    --teal-dark:  #00a887;
+    --accent:     #f4a261;
+    --danger:     #ff6b6b;
+    --text-white: #ffffff;
+    --text-light: #ccd6f6;
+    --text-muted: #8892b0;
+    --card-bg:    #112240;
+    --border:     rgba(0, 201, 167, 0.15);
+}
+
+/* ── Reset & Base ── */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--navy);
+    color: var(--text-light);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Syne', sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--navy); }
+::-webkit-scrollbar-thumb { background: var(--navy-light); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--teal-dark); }
+
+
+/* =============================================
+   NAVBAR
+   ============================================= */
+
+.navbar {
+    background: var(--navy-mid);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 1.5rem;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+
+.navbar-brand {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.3rem;
+    color: var(--teal) !important;
+    letter-spacing: -0.5px;
+}
+
+.navbar-brand span {
+    color: var(--text-light);
+}
+
+.nav-link {
+    color: var(--text-muted) !important;
+    font-weight: 500;
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem !important;
+    border-radius: 6px;
+    transition: color 0.2s, background 0.2s;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--teal) !important;
+    background: rgba(0, 201, 167, 0.08);
+}
+
+.nav-link i {
+    margin-right: 5px;
+}
+
+.navbar-toggler {
+    border-color: var(--border);
+}
+
+.navbar-toggler-icon {
+    filter: invert(1);
+}
+
+/* Role badges in navbar */
+.role-badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.role-badge.admin {
+    background: rgba(244, 162, 97, 0.2);
+    color: var(--accent);
+    border: 1px solid var(--accent);
+}
+
+.role-badge.company {
+    background: rgba(0, 201, 167, 0.15);
+    color: var(--teal);
+    border: 1px solid var(--teal);
+}
+
+.role-badge.student {
+    background: rgba(100, 149, 237, 0.15);
+    color: #64a0f5;
+    border: 1px solid #64a0f5;
+}
+
+.navbar-username {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+}
+
+
+/* =============================================
+   BUTTONS
+   ============================================= */
+
+.btn-teal {
+    background: var(--teal);
+    color: var(--navy);
+    border: none;
+    font-weight: 600;
+    border-radius: 7px;
+    padding: 7px 18px;
+    font-size: 0.85rem;
+    transition: background 0.2s, color 0.2s;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.btn-teal:hover {
+    background: var(--teal-dark);
+    color: var(--navy);
+}
+
+.btn-outline-teal {
+    border: 1px solid var(--teal);
+    color: var(--teal);
+    background: transparent;
+    border-radius: 7px;
+    padding: 6px 16px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: background 0.2s;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.btn-outline-teal:hover {
+    background: rgba(0, 201, 167, 0.12);
+    color: var(--teal);
+}
+
+.btn-danger-soft {
+    background: rgba(255, 107, 107, 0.12);
+    color: var(--danger);
+    border: 1px solid rgba(255, 107, 107, 0.3);
+    border-radius: 7px;
+    padding: 6px 14px;
+    font-size: 0.82rem;
+    transition: background 0.2s;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.btn-danger-soft:hover {
+    background: rgba(255, 107, 107, 0.22);
+    color: var(--danger);
+}
+
+.btn-warning-soft {
+    background: rgba(244, 162, 97, 0.12);
+    color: var(--accent);
+    border: 1px solid rgba(244, 162, 97, 0.3);
+    border-radius: 7px;
+    padding: 6px 14px;
+    font-size: 0.82rem;
+    transition: background 0.2s;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.btn-warning-soft:hover {
+    background: rgba(244, 162, 97, 0.22);
+    color: var(--accent);
+}
+
+.btn-logout {
+    font-size: 0.85rem;
+    padding: 6px 16px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 100, 100, 0.4);
+    color: var(--danger);
+    background: transparent;
+    transition: background 0.2s, border-color 0.2s;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.btn-logout:hover {
+    background: rgba(255, 107, 107, 0.15);
+    color: var(--danger);
+    border-color: var(--danger);
+}
+
+
+/* =============================================
+   LAYOUT
+   ============================================= */
+
+.main-content {
+    padding: 2rem 1.5rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.page-header {
+    margin-bottom: 1.8rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.page-header h2 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--text-white);
+}
+
+.page-header .subtitle {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-top: 0.2rem;
+}
+
+
+/* =============================================
+   CARDS
+   ============================================= */
+
+.portal-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: border-color 0.2s, transform 0.2s;
+}
+
+.portal-card:hover {
+    border-color: rgba(0, 201, 167, 0.35);
+    transform: translateY(-2px);
+}
+
+/* Stat cards */
+.stat-card {
+    background: var(--navy-light);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.stat-card .stat-icon {
+    font-size: 2rem;
+    color: var(--teal);
+    opacity: 0.6;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.stat-card .stat-number {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--teal);
+    line-height: 1;
+    display: block;
+}
+
+.stat-card .stat-label {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-top: 0.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: block;
+}
+
+/* Drive cards (student dashboard) */
+.drive-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.4rem;
+    transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.drive-card:hover {
+    border-color: rgba(0, 201, 167, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.drive-card .company-tag {
+    font-size: 0.8rem;
+    color: var(--teal);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.drive-card h5 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-white);
+    margin: 0.5rem 0;
+}
+
+.drive-card .drive-desc {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    flex-grow: 1;
+}
+
+.drive-card .drive-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.drive-meta-tag {
+    background: var(--navy-light);
+    padding: 3px 10px;
+    border-radius: 20px;
+    color: var(--text-muted);
+    font-size: 0.78rem;
+}
+
+/* Quick action cards on admin dashboard */
+.action-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: border-color 0.2s, transform 0.2s;
+    display: block;
+    color: inherit;
+}
+
+.action-card:hover {
+    border-color: rgba(0, 201, 167, 0.35);
+    transform: translateY(-2px);
+    color: inherit;
+}
+
+.action-card .action-icon {
+    font-size: 1.8rem;
+    color: var(--teal);
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.action-card .action-title {
+    font-weight: 600;
+    color: var(--text-white);
+    font-size: 0.95rem;
+}
+
+.action-card .action-sub {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 0.2rem;
+}
+
+
+/* =============================================
+   TABLES
+   ============================================= */
+
+.table-wrapper {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.portal-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.portal-table thead th {
+    background: var(--navy-light);
+    color: var(--teal);
+    font-family: 'Syne', sans-serif;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    padding: 0.9rem 1rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.portal-table thead th:first-child { border-radius: 8px 0 0 0; }
+.portal-table thead th:last-child  { border-radius: 0 8px 0 0; }
+
+.portal-table tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+}
+
+.portal-table tbody tr:hover {
+    background: rgba(0, 201, 167, 0.05);
+}
+
+.portal-table tbody td {
+    padding: 0.85rem 1rem;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    vertical-align: middle;
+}
+
+.td-id {
+    color: var(--text-muted);
+}
+
+.td-bold {
+    font-weight: 600;
+    color: var(--text-white);
+}
+
+.td-small {
+    font-size: 0.85rem;
+}
+
+.td-muted {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.action-group {
+    display: flex;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+}
+
+/* Student photo in table */
+.student-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 8px;
+    border: 1px solid var(--border);
+    vertical-align: middle;
+}
+
+.avatar-placeholder {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--navy-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+}
+
+
+/* =============================================
+   STATUS BADGES
+   ============================================= */
+
+.status-pill {
+    display: inline-block;
+    padding: 3px 12px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+.badge-applied     { background: rgba(100,160,245,0.15); color: #64a0f5; border: 1px solid rgba(100,160,245,0.3); }
+.badge-shortlisted { background: rgba(244,162,97,0.15);  color: var(--accent); border: 1px solid rgba(244,162,97,0.3); }
+.badge-selected    { background: rgba(0,201,167,0.15);   color: var(--teal); border: 1px solid rgba(0,201,167,0.3); }
+.badge-rejected    { background: rgba(255,107,107,0.12); color: var(--danger); border: 1px solid rgba(255,107,107,0.25); }
+.badge-pending     { background: rgba(180,180,180,0.1);  color: #aaa; border: 1px solid rgba(180,180,180,0.2); }
+.badge-approved    { background: rgba(0,201,167,0.15);   color: var(--teal); border: 1px solid rgba(0,201,167,0.3); }
+.badge-closed      { background: rgba(255,107,107,0.1);  color: #ff9999; border: 1px solid rgba(255,107,107,0.2); }
+.badge-active      { background: rgba(0,201,167,0.15);   color: var(--teal); border: 1px solid rgba(0,201,167,0.3); }
+.badge-blacklisted { background: rgba(255,107,107,0.12); color: var(--danger); border: 1px solid rgba(255,107,107,0.25); }
+.badge-complete    { background: rgba(0,201,167,0.15);   color: var(--teal); border: 1px solid rgba(0,201,167,0.3); }
+.badge-incomplete  { background: rgba(180,180,180,0.1);  color: #aaa; border: 1px solid rgba(180,180,180,0.2); }
+
+
+/* =============================================
+   FORMS
+   ============================================= */
+
+.form-control,
+.form-select {
+    background: var(--navy);
+    border: 1px solid var(--border);
+    color: var(--text-light);
+    border-radius: 8px;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.9rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%;
+}
+
+.form-control:focus,
+.form-select:focus {
+    background: var(--navy);
+    border-color: var(--teal);
+    color: var(--text-light);
+    box-shadow: 0 0 0 3px rgba(0, 201, 167, 0.1);
+    outline: none;
+}
+
+.form-control::placeholder {
+    color: var(--text-muted);
+}
+
+.form-label {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 0.4rem;
+    display: block;
+}
+
+.form-text {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin-top: 0.3rem;
+}
+
+.required-star {
+    color: var(--danger);
+}
+
+/* Input group icon */
+.input-icon-wrap {
+    position: relative;
+}
+
+.input-icon-wrap .input-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 1rem;
+    pointer-events: none;
+}
+
+.input-icon-wrap .form-control {
+    padding-left: 2.4rem;
+}
+
+/* Checkbox group (departments) */
+.dept-checkbox {
+    background: var(--navy);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 14px 8px 34px;
+    position: relative;
+    display: inline-block;
+}
+
+.dept-checkbox input[type="checkbox"] {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    accent-color: var(--teal);
+    width: 15px;
+    height: 15px;
+}
+
+.dept-checkbox label {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin: 0;
+}
+
+/* Form card wrapper */
+.form-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    max-width: 640px;
+}
+
+.form-card-wide {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    max-width: 720px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.form-group {
+    margin-bottom: 1.2rem;
+}
+
+.form-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+
+/* =============================================
+   ALERTS / FLASH MESSAGES
+   ============================================= */
+
+.alert {
+    padding: 0.85rem 1.1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.alert-success {
+    background: rgba(0, 201, 167, 0.1);
+    border: 1px solid rgba(0, 201, 167, 0.3);
+    color: var(--teal);
+}
+
+.alert-danger {
+    background: rgba(255, 107, 107, 0.1);
+    border: 1px solid rgba(255, 107, 107, 0.3);
+    color: var(--danger);
+}
+
+.alert-warning {
+    background: rgba(244, 162, 97, 0.1);
+    border: 1px solid rgba(244, 162, 97, 0.3);
+    color: var(--accent);
+}
+
+.alert-info {
+    background: rgba(100, 160, 245, 0.1);
+    border: 1px solid rgba(100, 160, 245, 0.3);
+    color: #64a0f5;
+}
+
+.flash-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+
+/* =============================================
+   AUTH PAGES (Login / Register)
+   ============================================= */
+
+.auth-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
+.auth-box {
+    width: 100%;
+    max-width: 420px;
+}
+
+.auth-box-wide {
+    width: 100%;
+    max-width: 500px;
+}
+
+.auth-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text-white);
+    text-align: center;
+    margin-bottom: 0.4rem;
+}
+
+.auth-subtitle {
+    color: var(--text-muted);
+    text-align: center;
+    font-size: 0.9rem;
+    margin-bottom: 1.8rem;
+}
+
+.auth-footer {
+    text-align: center;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+}
+
+.auth-footer a {
+    color: var(--teal);
+    font-weight: 600;
+}
+
+.auth-divider {
+    border-color: var(--border);
+    margin: 1.5rem 0;
+}
+
+
+/* =============================================
+   PROFILE PAGE
+   ============================================= */
+
+.profile-photo-wrap {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.profile-photo {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--teal);
+    box-shadow: 0 0 20px rgba(0, 201, 167, 0.2);
+}
+
+.profile-photo-placeholder {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background: var(--navy-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid var(--border);
+    margin: 0 auto;
+    font-size: 3rem;
+    color: var(--text-muted);
+}
+
+.profile-photo-label {
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    margin-top: 0.5rem;
+}
+
+
+/* =============================================
+   EMPTY STATES
+   ============================================= */
+
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-muted);
+}
+
+.empty-state i {
+    font-size: 3rem;
+    opacity: 0.3;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.empty-state p {
+    margin-bottom: 1rem;
+}
+
+
+/* =============================================
+   SECTION LABEL
+   ============================================= */
+
+.section-label {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+}
+
+
+/* =============================================
+   RESUME UPLOAD PAGE
+   ============================================= */
+
+.resume-current {
+    background: rgba(0, 201, 167, 0.08);
+    border: 1px solid rgba(0, 201, 167, 0.25);
+    border-radius: 8px;
+    padding: 0.85rem 1.1rem;
+    font-size: 0.88rem;
+    color: var(--teal);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.resume-current a {
+    color: var(--teal);
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
+
+@media (max-width: 768px) {
+    .main-content {
+        padding: 1.2rem 1rem;
+    }
+
+    .page-header h2 {
+        font-size: 1.4rem;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .stat-card .stat-number {
+        font-size: 2rem;
+    }
+
+    .portal-table thead {
+        display: none;
+    }
+
+    .portal-table tbody tr {
+        display: block;
+        margin-bottom: 1rem;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 0.5rem;
+    }
+
+    .portal-table tbody td {
+        display: block;
+        text-align: right;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .portal-table tbody td::before {
+        content: attr(data-label);
+        float: left;
+        color: var(--text-muted);
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        font-weight: 600;
+    }
+
+    .drive-card {
+        margin-bottom: 0;
+    }
+}
