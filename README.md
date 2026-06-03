@@ -93,8 +93,8 @@ Student Tracks Status
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/tce-placement-portal.git
-cd tce-placement-portal
+git clone https://github.com/your-username/placement-portal.git
+cd placement-portal
 ```
 
 ### Create a Virtual Environment
